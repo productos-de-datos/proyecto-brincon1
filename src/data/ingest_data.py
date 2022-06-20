@@ -35,10 +35,10 @@ def ingest_data():
     for num in range(1995, 2022):
         if num in range(2016, 2018):
             #urlArchivosXls = https://github.com/jdvelasq/datalabs/blob/master/datasets/precio_bolsa_nacional/xls/{}.xls?raw=true.format(num)
-            curl https://github.com/jdvelasq/datalabs/blob/master/datasets/precio_bolsa_nacional/xls/{}.xls?raw=true.format(num) -o data_lake/landing/{}.xls.format(num)
+            curl https://github.com/jdvelasq/datalabs/blob/master/datasets/precio_bolsa_nacional/xls/{}.xls?raw=true.format(num) -o 'data_lake/landing/{}.xls'.format(num)
         else:
             #urlArchivosXlsx = https://github.com/jdvelasq/datalabs/blob/master/datasets/precio_bolsa_nacional/xls/{}.xlsx?raw=true.format(num)
-            curl https://github.com/jdvelasq/datalabs/blob/master/datasets/precio_bolsa_nacional/xls/{}.xlsx?raw=true.format(num) -o data_lake/landing/{}.xls.format(num)
+            curl https://github.com/jdvelasq/datalabs/blob/master/datasets/precio_bolsa_nacional/xls/{}.xlsx?raw=true.format(num) -o 'data_lake/landing/{}.xls'.format(num)
     
     #curl https://github.com/jdvelasq/datalabs/blob/master/datasets/precio_bolsa_nacional/xls/1995.xlsx?raw=true -o data_lake/landing/1995.xlsx
     #raise NotImplementedError("Implementar esta función")
