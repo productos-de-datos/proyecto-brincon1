@@ -5,6 +5,9 @@ Módulo de ingestión de datos.
 """
 
 
+from nturl2path import url2pathname
+
+
 def ingest_data():
     """Ingeste los datos externos a la capa landing del data lake.
 
@@ -32,16 +35,31 @@ def ingest_data():
     #         urlArchivosXlsx = 'https://github.com/jdvelasq/datalabs/blob/master/datasets/precio_bolsa_nacional/xls/{}.xlsx?raw=true'.format(num)
     #         wget.download(urlArchivosXlsx )
 
-    for num in range(1995, 2022):
-        if num in range(2016, 2018):
-            #urlArchivosXls = https://github.com/jdvelasq/datalabs/blob/master/datasets/precio_bolsa_nacional/xls/{}.xls?raw=true.format(num)
-            curl https://github.com/jdvelasq/datalabs/blob/master/datasets/precio_bolsa_nacional/xls/{}.xls?raw=true.format(num) -o 'data_lake/landing/{}.xls'.format(num)
-        else:
-            #urlArchivosXlsx = https://github.com/jdvelasq/datalabs/blob/master/datasets/precio_bolsa_nacional/xls/{}.xlsx?raw=true.format(num)
-            curl https://github.com/jdvelasq/datalabs/blob/master/datasets/precio_bolsa_nacional/xls/{}.xlsx?raw=true.format(num) -o 'data_lake/landing/{}.xls'.format(num)
+    # for num in range(1995, 2022):
+    #     if num in range(2016, 2018):
+    #         urlArchivosXls = 'https://github.com/jdvelasq/datalabs/blob/master/datasets/precio_bolsa_nacional/xls/{}.xls?raw=true'.format(num)
+    #         rutaDescarga = 'data_lake/landing/{}.xls'.format(num)
+    #         curl urlArchivosXls -o rutaDescarga
+    #     else:
+    #         urlArchivosXlsx = 'https://github.com/jdvelasq/datalabs/blob/master/datasets/precio_bolsa_nacional/xls/{}.xlsx?raw=true'.format(num)
+    #         rutaDescarga = 'data_lake/landing/{}.xlsx'.format(num)
+    #         curl https://github.com/jdvelasq/datalabs/blob/master/datasets/precio_bolsa_nacional/xls/1995.xlsx?raw=true data_lake/landing/1995.xlsx
     
     #curl https://github.com/jdvelasq/datalabs/blob/master/datasets/precio_bolsa_nacional/xls/1995.xlsx?raw=true -o data_lake/landing/1995.xlsx
+    
     #raise NotImplementedError("Implementar esta función")
+
+    import requests as req
+
+    for num in range(1995, 2022):
+        if num in range(2016, 2018):
+            url = 'https://github.com/jdvelasq/datalabs/blob/master/datasets/precio_bolsa_nacional/xls/{}.xls?raw=true'.format(num)
+            file = req.get(url, allow_redirects=True)
+            open('data_lake/landing/{}.xls'.format(num), 'wb').write(file.content)
+        else:
+            url = 'https://github.com/jdvelasq/datalabs/blob/master/datasets/precio_bolsa_nacional/xls/{}.xlsx?raw=true'.format(num)
+            file = req.get(url, allow_redirects=True)
+            open('data_lake/landing/{}.xlsx'.format(num), 'wb').write(file.content)
 
 
 if __name__ == "__main__":
