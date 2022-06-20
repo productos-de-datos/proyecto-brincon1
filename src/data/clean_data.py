@@ -12,6 +12,17 @@ def clean_data():
 
 
     """
+
+
+
+
+
+
+
+
+
+
+    
     raise NotImplementedError("Implementar esta función")
 
 

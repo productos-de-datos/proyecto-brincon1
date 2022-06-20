@@ -1,3 +1,4 @@
+
 def create_data_lake():
     """Cree el data lake con sus capas.
 
@@ -21,7 +22,21 @@ def create_data_lake():
 
 
     """
-    raise NotImplementedError("Implementar esta función")
+
+    from os import mkdir
+ 
+    # se crean las carpetas con la funcion mkdir del sistema operativo según la estructura de las indicaciones
+    mkdir("../../data_lake")
+    mkdir("../../data_lake/landing")
+    mkdir("../../data_lake/raw")
+    mkdir("../../data_lake/cleansed")
+    mkdir("../../data_lake/business")
+    mkdir("../../data_lake/business/reports")
+    mkdir("../../data_lake/business/reports/figures")
+    mkdir("../../data_lake/business/features")
+    mkdir("../../data_lake/business/forecasts")
+
+    #raise NotImplementedError("Implementar esta función")
 
 
 if __name__ == "__main__":
