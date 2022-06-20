@@ -33,7 +33,7 @@ def transform_data():
                 ob.writerow(row)
 
 
-    raise NotImplementedError("Implementar esta función")
+    #raise NotImplementedError("Implementar esta función")
 
 
 if __name__ == "__main__":
