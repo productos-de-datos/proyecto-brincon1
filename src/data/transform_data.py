@@ -8,10 +8,6 @@ def transform_data():
 
     """
 
-    #import openpyxl
-    import csv
-    import pyexcel 
-
     # Se hace un ciclo for porque tenemos dos archivos xls así que en el condicional primero se transformas dichos archivos a xlsx
     # y despues se transforman a csv utilizando la funcion openpyxl, la cual abre cada archivo, lo recorre por filas y luego recorre 
     # cada data de cada fila y lo convierte a un valor. Despues ese valor se escribe en cada fila de cada archivo csv y se guardan.
@@ -36,12 +32,12 @@ def transform_data():
 
     for num in range(1995, 2022):
         if num in range(2016, 2018):
-            pyexcel.save_as(file_name='data_lake/landing/{}.xls'.format(num), dest_file_name='data_lake/landing/{}.xlsx'.format(num))
-            data_xls = pd.read_excel('data_lake/landing/{}.xlsx'.format(num), index_col=None)
-            data_xls.to_csv('data_lake/raw/{}.csv', encoding='utf-8')
+            #pyexcel.save_as(file_name='data_lake/landing/{}.xls'.format(num), dest_file_name='data_lake/landing/{}.xlsx'.format(num))
+            data_xls = pd.read_excel('data_lake/landing/{}.xls'.format(num), index_col=None)
+            data_xls.to_csv('data_lake/raw/{}.csv'.format(num), encoding='utf-8')
         else:
             data_xls = pd.read_excel('data_lake/landing/{}.xlsx'.format(num), index_col=None)
-            data_xls.to_csv('data_lake/raw/{}.csv', encoding='utf-8')
+            data_xls.to_csv('data_lake/raw/{}.csv'.format(num), encoding='utf-8')
 
 
     #raise NotImplementedError("Implementar esta función")
