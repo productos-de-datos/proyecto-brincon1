@@ -4,10 +4,6 @@ Módulo de ingestión de datos.
 
 """
 
-
-from nturl2path import url2pathname
-
-
 def ingest_data():
     """Ingeste los datos externos a la capa landing del data lake.
 
