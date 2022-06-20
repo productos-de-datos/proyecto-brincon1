@@ -13,9 +13,6 @@ def ingest_data():
 
     """
 
-    #import wget
-    import os
-
     # se especifica el lugar donde se guardarán los archivos descargados
     #rutaDescarga = os.chdir('data_lake/landing/')
 
@@ -31,20 +28,6 @@ def ingest_data():
     #         urlArchivosXlsx = 'https://github.com/jdvelasq/datalabs/blob/master/datasets/precio_bolsa_nacional/xls/{}.xlsx?raw=true'.format(num)
     #         wget.download(urlArchivosXlsx )
 
-    # for num in range(1995, 2022):
-    #     if num in range(2016, 2018):
-    #         urlArchivosXls = 'https://github.com/jdvelasq/datalabs/blob/master/datasets/precio_bolsa_nacional/xls/{}.xls?raw=true'.format(num)
-    #         rutaDescarga = 'data_lake/landing/{}.xls'.format(num)
-    #         curl urlArchivosXls -o rutaDescarga
-    #     else:
-    #         urlArchivosXlsx = 'https://github.com/jdvelasq/datalabs/blob/master/datasets/precio_bolsa_nacional/xls/{}.xlsx?raw=true'.format(num)
-    #         rutaDescarga = 'data_lake/landing/{}.xlsx'.format(num)
-    #         curl https://github.com/jdvelasq/datalabs/blob/master/datasets/precio_bolsa_nacional/xls/1995.xlsx?raw=true data_lake/landing/1995.xlsx
-    
-    #curl https://github.com/jdvelasq/datalabs/blob/master/datasets/precio_bolsa_nacional/xls/1995.xlsx?raw=true -o data_lake/landing/1995.xlsx
-    
-    #raise NotImplementedError("Implementar esta función")
-
     import requests as req
 
     for num in range(1995, 2022):
@@ -57,6 +40,7 @@ def ingest_data():
             file = req.get(url, allow_redirects=True)
             open('data_lake/landing/{}.xlsx'.format(num), 'wb').write(file.content)
 
+    #raise NotImplementedError("Implementar esta función")
 
 if __name__ == "__main__":
     import doctest
