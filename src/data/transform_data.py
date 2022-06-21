@@ -32,13 +32,11 @@ def transform_data():
 
     for num in range(1995, 2022):
         if num in range(2016, 2018):
-            #pyexcel.save_as(file_name='data_lake/landing/{}.xls'.format(num), dest_file_name='data_lake/landing/{}.xlsx'.format(num))
-            data_xls = pd.read_excel('data_lake/landing/{}.xls'.format(num), index_col=None)
-            data_xls.to_csv('data_lake/raw/{}.csv'.format(num), encoding='utf-8')
+            data_xls = pd.read_excel('data_lake/landing/{}.xls'.format(num), index_col=None, header=None)
+            data_xls.to_csv('data_lake/raw/{}.csv'.format(num), encoding='utf-8', index=False, header=False)
         else:
-            data_xls = pd.read_excel('data_lake/landing/{}.xlsx'.format(num), index_col=None)
-            data_xls.to_csv('data_lake/raw/{}.csv'.format(num), encoding='utf-8')
-
+            data_xls = pd.read_excel('data_lake/landing/{}.xlsx'.format(num), index_col=None, header=None)
+            data_xls.to_csv('data_lake/raw/{}.csv'.format(num), encoding='utf-8', index=False, header=False)
 
     #raise NotImplementedError("Implementar esta función")
 
