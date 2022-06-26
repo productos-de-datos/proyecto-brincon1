@@ -1,3 +1,15 @@
+"""
+Documentación
+
+Se hacen dos condicionales, el primero para leer los archivos terminados en xls y el segundo para leer los archivos xlsx.
+Se eliminan las filas que no tengan al menos 10 valores distintos de N/A. Esto se hace porque hay archivos que tienen filas
+vacias en el encabezado y al final de la página.
+Además, se inicia desde la fila 1 para no considerar el nombre de las columnas y que por defecto se asigne una lista 
+como nombre. También se seleccionan solo las columnas de interes, de la 0 a la 24 y se asigna la columna 0 con formato YYYY-MM-DD.
+y despues hacer el reemplazo de los nombres más fácil.
+
+"""
+
 def transform_data():
     """Transforme los archivos xls a csv.
 
@@ -8,35 +20,24 @@ def transform_data():
 
     """
 
-    # Se hace un ciclo for porque tenemos dos archivos xls así que en el condicional primero se transformas dichos archivos a xlsx
-    # y despues se transforman a csv utilizando la funcion openpyxl, la cual abre cada archivo, lo recorre por filas y luego recorre 
-    # cada data de cada fila y lo convierte a un valor. Despues ese valor se escribe en cada fila de cada archivo csv y se guardan.
-
-    # for num in range(1995, 2022):
-    #     if num in range(2016, 2018):
-    #         pyexcel.save_as(file_name='data_lake/landing/{}.xls'.format(num), dest_file_name='data_lake/landing/{}.xlsx'.format(num))
-    #         ob = csv.writer(open("data_lake/raw/{}.csv".format(num),'w', newline = ""))
-    #         data = openpyxl.load_workbook('data_lake/landing/{}.xlsx'.format(num)).active
-    #         for r in data.rows:
-    #             row = [a.value for a in r]
-    #             ob.writerow(row)
- 
-    #     else:
-    #         ob = csv.writer(open("data_lake/raw/{}.csv".format(num),'w', newline = ""))
-    #         data = openpyxl.load_workbook('data_lake/landing/{}.xlsx'.format(num)).active
-    #         for r in data.rows:
-    #             row = [a.value for a in r]
-    #             ob.writerow(row)
-
     import pandas as pd
 
     for num in range(1995, 2022):
         if num in range(2016, 2018):
             data_xls = pd.read_excel('data_lake/landing/{}.xls'.format(num), index_col=None, header=None)
-            data_xls.to_csv('data_lake/raw/{}.csv'.format(num), encoding='utf-8', index=False, header=False)
+            df = data_xls.dropna(axis=0, thresh=10)
+            df = df.iloc[1:]
+            df = df[df.columns[0:25]] 
+            df[0] = pd.to_datetime(df[0], format="%Y/%m/%d")
+            df.to_csv('data_lake/raw/{}.csv'.format(num), encoding='utf-8', index=False, header=True)
         else:
             data_xls = pd.read_excel('data_lake/landing/{}.xlsx'.format(num), index_col=None, header=None)
-            data_xls.to_csv('data_lake/raw/{}.csv'.format(num), encoding='utf-8', index=False, header=False)
+            df = data_xls.dropna(axis=0, thresh=10)
+            df = df.iloc[1:]
+            df = df[df.columns[0:25]] 
+            df[0] = pd.to_datetime(df[0], format="%Y/%m/%d")
+            df.to_csv('data_lake/raw/{}.csv'.format(num), encoding='utf-8', index=False, header=True)
+
 
     #raise NotImplementedError("Implementar esta función")
 

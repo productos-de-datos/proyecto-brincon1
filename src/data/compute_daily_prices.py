@@ -1,3 +1,10 @@
+"""
+Documentación
+
+Se agrega una nueva columna llamada promedio diario, la cual suma el precio de cada hora y lo divide en 24.
+Después se selecciona solo la primera y la última columna y se guardan en un nuevo archivo.
+"""
+
 def compute_daily_prices():
     """Compute los precios promedios diarios.
 
@@ -12,10 +19,22 @@ def compute_daily_prices():
 
 
     """
-    raise NotImplementedError("Implementar esta función")
+    import pandas as pd
+
+    df = pd.read_csv('data_lake/cleansed/precios-horarios.csv')
+    
+    df['avg_daily_price'] = df.sum(axis=1, numeric_only=True)/24
+
+    seleccion_columnas = df.iloc[:, [0,25]]
+
+    seleccion_columnas.to_csv('data_lake/business/precios-diarios.csv', encoding='utf-8', index=False)
+
+    # raise NotImplementedError("Implementar esta función")
 
 
 if __name__ == "__main__":
     import doctest
 
     doctest.testmod()
+
+compute_daily_prices()

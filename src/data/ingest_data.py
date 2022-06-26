@@ -4,6 +4,15 @@ Módulo de ingestión de datos.
 
 """
 
+"""
+Documentación
+
+    Los archivos que se quieren descargar tienen en común que son números consecutivos así que se hace un rango para obtener 
+    la url de cada uno y un condicional para los archivos de los año 2016 y 2017 que terminan en xls. 
+    Se descargan con la libreria requests y se guardan en la ruta requerida.
+
+"""
+
 def ingest_data():
     """Ingeste los datos externos a la capa landing del data lake.
 
@@ -12,21 +21,6 @@ def ingest_data():
     descarga debe realizarse usando únicamente funciones de Python.
 
     """
-
-    # se especifica el lugar donde se guardarán los archivos descargados
-    #rutaDescarga = os.chdir('data_lake/landing/')
-
-    # Dado que los archivos que se quieren descargar estan en la misma ruta y son numeros consecutivos se hace un ciclo for
-    # para acceder a obtener la url de cada archivo. Además, como tenemos dos archivos xls (2016 y 2017) se hace un condicional 
-    # para obtener la url de dichos archivos. Como ya tenemos las url, con wget descargamos todos los archivos.
-
-    # for num in range(1995, 2022):
-    #     if num in range(2016, 2018):
-    #         urlArchivosXls = 'https://github.com/jdvelasq/datalabs/blob/master/datasets/precio_bolsa_nacional/xls/{}.xls?raw=true'.format(num)
-    #         wget.download(urlArchivosXls)
-    #     else:
-    #         urlArchivosXlsx = 'https://github.com/jdvelasq/datalabs/blob/master/datasets/precio_bolsa_nacional/xls/{}.xlsx?raw=true'.format(num)
-    #         wget.download(urlArchivosXlsx )
 
     import requests as req
 
@@ -40,11 +34,12 @@ def ingest_data():
             file = req.get(url, allow_redirects=True)
             open('data_lake/landing/{}.xlsx'.format(num), 'wb').write(file.content)
 
-    #raise NotImplementedError("Implementar esta función")
+    raise NotImplementedError("Implementar esta función")
 
 if __name__ == "__main__":
+    ingest_data()
+    
     import doctest
 
     doctest.testmod()
 
-ingest_data()
