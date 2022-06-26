@@ -22,7 +22,7 @@ def make_daily_prices_plot():
     plt.savefig('data_lake/business/reports/figures/daily_prices.png')
 
 
-    raise NotImplementedError("Implementar esta función")
+    #raise NotImplementedError("Implementar esta función")
 
 
 if __name__ == "__main__":

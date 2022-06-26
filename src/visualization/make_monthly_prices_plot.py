@@ -22,7 +22,7 @@ def make_daily_monthly_plot():
     plt.savefig('data_lake/business/reports/figures/monthly_prices.png')
 
 
-    raise NotImplementedError("Implementar esta función")
+    #raise NotImplementedError("Implementar esta función")
 
 
 if __name__ == "__main__":
