@@ -11,26 +11,71 @@ En luigi llame las funciones que ya creo.
 
 """
 from ingest_data import ingest_data
+from transform_data import transform_data
+from clean_data import clean_data
+from compute_daily_prices import compute_daily_prices
+from compute_monthly_prices import compute_monthly_prices
 import luigi
-import requests as req
 from luigi import Task, LocalTarget
 
 if __name__ == "__main__":
 
-
     class DownloadFiles(Task):
-        #save_path = f'data_lake/landing/*.xslx'
-        def requires(self):
-            return ingest_data()
-
+      
         def output(self):
             return luigi.LocalTarget('data_lake/landing/1995.txt')
 
+        def run(self):
+            with self.output().open("w") as outfile:
+                ingest_data()
+
+    class TransformFiles(Task):
+
+        def requires(self):
+            return DownloadFiles()
+   
+        def output(self):
+            return luigi.LocalTarget('data_lake/raw/1995.txt')
 
         def run(self):
             with self.output().open("w") as outfile:
-                outfile.write(ingest_data())
-            print(ingest_data())
+                transform_data()
+
+    class TablaUnicaPrecios(Task):
+        def requires(self):
+            return TransformFiles()
+
+        def output(self):
+            return luigi.LocalTarget('data_lake/cleansed/1995.txt')
+
+        def run(self):
+            with self.output().open("w") as outfile:
+                clean_data()
+
+    class PrecioPromedioDiario(Task):
+        def requires(self):
+            return TablaUnicaPrecios()
+
+        def output(self):
+            return luigi.LocalTarget('data_lake/business/1995.txt')
+
+        def run(self):
+            with self.output().open("w") as outfile:
+                compute_daily_prices()
+
+    class PrecioPromedioMensual(Task):
+        # def requires(self):
+        #     return TablaUnicaPrecios()
+
+        def output(self):
+            return luigi.LocalTarget('data_lake/business/1995.txt')
+
+        def run(self):
+            with self.output().open("w") as outfile:
+                compute_monthly_prices()
+                
+
+    
         
                 # else:
                 #     url = 'https://github.com/jdvelasq/datalabs/blob/master/datasets/precio_bolsa_nacional/xls/{}.xlsx?raw=true'.format(num)
@@ -68,4 +113,4 @@ if __name__ == "__main__":
 
     doctest.testmod()
     
-luigi.run(["DownloadFiles", "--local-scheduler"])
+luigi.run(["PrecioPromedioDiario", "--local-scheduler"])
