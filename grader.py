@@ -107,8 +107,6 @@ def test_06():
 
 def test_07():
     """Evalua el pipeline"""
-    # os.system("rm -rf data_lake")
-    # os.system("make create_data_lake")
     os.system("make pipeline")
     assert os.path.isfile("data_lake/business/precios-diarios.csv") is True
     assert os.path.isfile("data_lake/business/precios-mensuales.csv") is True
@@ -122,23 +120,26 @@ def test_08():
 
 def test_09():
     """Evalua figura precios mensuales"""
-    os.system("make make_daily_monthly_plot")
+    os.system("make make_monthly_prices_plot")
     assert os.path.isfile("data_lake/business/reports/figures/monthly_prices.png") is True
     
 
 
 def test_10():
     """Evalua la creación de características para modelos"""
+    os.system("make make_features")
     assert os.path.isfile("data_lake/business/features/precios_diarios.csv") is True
 
 
 def test_11():
     """Modelo creado"""
+    os.system("make train_daily_model")
     assert os.path.isfile("modeles/precios-diarios.pkl") is True
 
 
 def test_12():
     """Pronosticos"""
+    os.system("make make_forecasts")
     assert os.path.isfile("data_lake/business/forecasts/precios-diarios.csv") is True
 
 

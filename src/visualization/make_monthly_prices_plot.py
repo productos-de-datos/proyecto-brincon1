@@ -4,7 +4,7 @@ Documentación:
 Esta función lo que hace es crear un gráfico de lineas a partir del archivo de precios promedios mensuales.
 """
 
-def make_daily_monthly_plot():
+def make_monthly_prices_plot():
     """Crea un grafico de lines que representa los precios promedios mensuales.
 
     Usando el archivo data_lake/business/precios-mensuales.csv, crea un grafico de
@@ -30,4 +30,4 @@ if __name__ == "__main__":
 
     doctest.testmod()
 
-make_daily_monthly_plot()
+make_monthly_prices_plot()
