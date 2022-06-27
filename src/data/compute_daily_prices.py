@@ -23,7 +23,7 @@ def compute_daily_prices():
 
     df = pd.read_csv('data_lake/cleansed/precios-horarios.csv')
     
-    df['avg_daily_price'] = df.sum(axis=1, numeric_only=True)/24
+    df['avg_daily_price'] = df.mean(axis=1, numeric_only=True)
 
     seleccion_columnas = df.iloc[:, [0,25]]
 

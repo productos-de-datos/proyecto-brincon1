@@ -4,6 +4,7 @@ Documentación
 Se buscan todos los archivos csv y se retorna los nombres en una lista. 
 Se concatenan todos los archivos por el indice de la columna y se obtiene un único archivo.
 Se convierte la primera columna a formato fecha.
+Se rellena los espacios vacios por la media de cada filal
 Y por último se asigna un nombre a las columnas y se guarda el archivo archivo csv.
 
 """
@@ -36,6 +37,8 @@ def clean_data():
     df = pd.concat(map(pd.read_csv, list_files), ignore_index=True)
 
     df['0'] = pd.to_datetime(df['0'], format="%Y/%m/%d")
+    
+    df = df.T.fillna(df.mean(axis=1,  numeric_only=True)).T
  
     df.rename(columns={'0':'fecha', '1':'00', '2':'01', '3':'02', '4':'03', '5':'04', '6':'05', '7':'06', 
                         '8':'07', '9':'08', '10':'09', '11':'10', '12':'11', '13':'12', '14':'13', '15':'14', '16':'15',

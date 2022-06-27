@@ -3,6 +3,9 @@ Documentación:
 
 """
 
+from matplotlib.pyplot import axis
+
+
 def make_features():
     """Prepara datos para pronóstico.
 
@@ -18,9 +21,16 @@ def make_features():
 
     """
     import pandas as pd
+    import numpy as np
 
-    df = pd.read_csv('data_lake/business/precios-diarios.csv', index_col=0, parse_dates=True)
-    print(df.describe)
+  
+    df = pd.read_csv('data_lake/cleansed/precios-horarios.csv')
+
+    print(df)
+
+
+    # X, y = df.data, df.target
+    # print(X.shape, y.shape)
 
 
     #select_columns.to_csv('data_lake/business/features/precios-diarios.csv', encoding='utf-8', index=False)

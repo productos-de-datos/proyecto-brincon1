@@ -27,7 +27,7 @@ def compute_monthly_prices():
 
     df = pd.read_csv('data_lake/cleansed/precios-horarios.csv', dayfirst=True, index_col=0, parse_dates = {'Fecha': ['fecha']})    
 
-    df['avg_monthly_price'] = df.sum(axis=1, numeric_only=True)/24
+    df['avg_monthly_price'] = df.mean(axis=1, numeric_only=True)
     # se agrupa el año y el mes con al promedio diario y se saca el promedio mesual
     avg = df.groupby([df.index.year, df.index.month])['avg_monthly_price'].mean()
     
