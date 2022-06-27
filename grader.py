@@ -107,7 +107,6 @@ def test_06():
 
 def test_07():
     """Evalua el pipeline"""
-    os.system("rm -rf data_lake")
     os.system("make create_data_lake")
     os.system("make pipeline")
     assert os.path.isfile("data_lake/business/precios-diarios.csv") is True
