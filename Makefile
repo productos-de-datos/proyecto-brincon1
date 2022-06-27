@@ -28,7 +28,6 @@ compute_monthly_prices:
 	python3 src/data/compute_monthly_prices.py
 
 pipeline:
-	rm -rf data_lake
 	python3 src/data/create_data_lake.py
 	python3 src/data/pipeline.py
 
