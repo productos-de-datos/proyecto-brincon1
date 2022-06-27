@@ -34,7 +34,7 @@ def ingest_data():
             file = req.get(url, allow_redirects=True)
             open('data_lake/landing/{}.xlsx'.format(num), 'wb').write(file.content)
 
-    raise NotImplementedError("Implementar esta función")
+    #raise NotImplementedError("Implementar esta función")
 
 if __name__ == "__main__":
     
