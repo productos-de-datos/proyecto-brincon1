@@ -24,25 +24,16 @@ def compute_monthly_prices():
     """
     
     import pandas as pd
+  
+    df = pd.read_csv('data_lake/cleansed/precios-horarios.csv')
+    df['fecha'] = pd.to_datetime(df['fecha'], format="%Y/%m/%d")
+    df = df.set_index('fecha')
 
-    df = pd.read_csv('data_lake/cleansed/precios-horarios.csv', dayfirst=True, index_col=0, parse_dates = {'Fecha': ['fecha']})    
+    df = df.resample('M').mean()
+    df = df.reset_index()
+    df = df.iloc[:, [0, 2]]
 
-    df['avg_monthly_price'] = df.mean(axis=1, numeric_only=True)
-    # se agrupa el año y el mes con al promedio diario y se saca el promedio mesual
-    avg = df.groupby([df.index.year, df.index.month])['avg_monthly_price'].mean()
-    
-    avg.index.names = ["year", "month"]
-
-    deleteIndex = avg.reset_index()
-    
-    day = 10
-    deleteIndex['fecha']= pd.to_datetime({'year': deleteIndex["year"],
-                                        'month': deleteIndex["month"],
-                                        'day': [day]*deleteIndex.shape[0]})
-                                                                            
-    select_columns = deleteIndex.iloc[:, [3, 2]]
-
-    select_columns.to_csv('data_lake/business/precios-mensuales.csv', encoding='utf-8', index=False)
+    df.to_csv('data_lake/business/precios-mensuales.csv', encoding='utf-8', index=False)
   
     #raise NotImplementedError("Implementar esta función")
 

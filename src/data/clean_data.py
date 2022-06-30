@@ -6,6 +6,8 @@ Se concatenan todos los archivos por el indice de la columna y se obtiene un ún
 Se convierte la primera columna a formato fecha.
 Se rellena los espacios vacios por la media de cada fila. Al usar axis=0, podemos completar los 
 valores que faltan en cada columna con los promedios de las filas.
+Se eliminan los duplicados de acuerdo a la columna fecha.
+Con melt se transforman las filas a columnas y se duplica la fecha para cada registro.
 Y por último se asigna un nombre a las columnas y se guarda el archivo archivo csv.
 
 """
@@ -37,16 +39,18 @@ def clean_data():
     # Merge files by joining all files
     df = pd.concat(map(pd.read_csv, list_files), ignore_index=True)
 
-    df['0'] = pd.to_datetime(df['0'], format="%Y/%m/%d")
+    df['fecha'] = pd.to_datetime(df['fecha'], format="%Y/%m/%d")
 
     df = df.where(df.notna(), df.mean(axis=1, numeric_only=True), axis=0)
  
-    df.rename(columns={'0':'fecha', '1':'00', '2':'01', '3':'02', '4':'03', '5':'04', '6':'05', '7':'06', 
-                        '8':'07', '9':'08', '10':'09', '11':'10', '12':'11', '13':'12', '14':'13', '15':'14', '16':'15',
-                        '17':'16', '18':'17', '19':'18', '20':'19', '21':'20', '22':'21', '23':'22', '24':'23'},
-               inplace=True)
+    df = df.drop_duplicates(['fecha'], keep='first')
 
-    df.to_csv('data_lake/cleansed/precios-horarios.csv', encoding='utf-8', index=False)
+    df = pd.melt(df, id_vars="fecha")
+    df= df.sort_values(by = ['fecha', 'variable'])
+    df.rename(columns={'variable': 'hora', 
+                           'value': 'precio'}, inplace=True)
+
+    df.to_csv('data_lake/cleansed/precios-horarios.csv', encoding='utf-8', index=True)
 
 
     #raise NotImplementedError("Implementar esta función")

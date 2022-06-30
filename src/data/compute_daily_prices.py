@@ -22,12 +22,14 @@ def compute_daily_prices():
     import pandas as pd
 
     df = pd.read_csv('data_lake/cleansed/precios-horarios.csv')
-    
-    df['avg_daily_price'] = df.mean(axis=1, numeric_only=True)
+    df['fecha'] = pd.to_datetime(df['fecha'], format="%Y/%m/%d")
+    df = df.set_index('fecha')
 
-    seleccion_columnas = df.iloc[:, [0,25]]
+    df = df.resample('D').mean()
+    df = df.reset_index()
+    df = df.iloc[:, [0, 2]]
 
-    seleccion_columnas.to_csv('data_lake/business/precios-diarios.csv', encoding='utf-8', index=False)
+    df.to_csv('data_lake/business/precios-diarios.csv', encoding='utf-8', index=False)
 
     # raise NotImplementedError("Implementar esta función")
 

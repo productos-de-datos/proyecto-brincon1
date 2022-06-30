@@ -2,14 +2,10 @@
 Módulo de ingestión de datos.
 -------------------------------------------------------------------------------
 
-"""
-
-"""
-Documentación
-
-    Los archivos que se quieren descargar tienen en común que son números consecutivos así que se hace un rango para obtener 
-    la url de cada uno y un condicional para los archivos de los año 2016 y 2017 que terminan en xls. 
-    Se descargan con la libreria requests y se guardan en la ruta requerida.
+El nombre de los archivos que se quieren descargar son fechas consecutivas así 
+que se hace un rango para obtener la url de cada archivo y un condicional para 
+los archivos de los años 2016 y 2017 que terminan en xls. 
+Se descargan con la libreria requests y se guardan en la ruta requerida.
 
 """
 
