@@ -19,7 +19,7 @@ import pandas as pd
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.neural_network import MLPRegressor
-import pickle
+import pickle as pkl
 
 def load_data():
     df = pd.read_csv('data_lake/business/features/precios-diarios.csv')
@@ -55,8 +55,8 @@ def matriz_regresores():
 
 def save_model(model):
 
-    with open("src/models/precios-diarios.pickle", "wb") as file:
-        pickle.dump(model, file, pickle.HIGHEST_PROTOCOL)
+    with open("src/models/precios-diarios.pkl", "wb") as file:
+        pkl.dump(model, file, pkl.HIGHEST_PROTOCOL)
 
 def train_daily_model():
     X = matriz_regresores()

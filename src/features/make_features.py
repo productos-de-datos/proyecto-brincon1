@@ -25,7 +25,7 @@ def make_features():
 
     df = pd.read_csv('data_lake/business/precios-diarios.csv', index_col=0)
     
-    df.to_csv('data_lake/business/features/precios_diarios.csv', encoding='utf-8', index=True)
+    df.to_csv('data_lake/business/features/precios-diarios.csv', encoding='utf-8', index=True)
   
     #raise NotImplementedError("Implementar esta función")
 
