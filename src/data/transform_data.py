@@ -1,4 +1,4 @@
-# coding=utf-8
+
 """
 Módulo de transformación de datos.
 -------------------------------------------------------------------------------
@@ -9,10 +9,6 @@ con las que se va a trabajar.
 Además, se asigna el nombre a las columnas y se pasa a formato fecha el campo que
 contiene las contiene. 
 Por último se guardan los archivos en formato csv.
-
-Test_
->>> os.path.isfile("data_lake/raw/1995.csv") 
-True
 
 """
 
@@ -50,22 +46,10 @@ def transform_data():
             df["fecha"] = pd.to_datetime(df["fecha"], format="%Y/%m/%d")
             df.to_csv('data_lake/raw/{}.csv'.format(num), encoding='utf-8', index=False, header=True)
 
-
-    raise NotImplementedError("Implementar esta función")
-
-def test_03():
-    import os
-    assert os.path.isfile("data_lake/raw/1995.csv") is True
-
-def test_04():
-    assert transform_data().columns.tolist() == [
-        "fecha", "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", 
-            "16", "17", "18", "19", "20", "21", "22", "23"]
-
+    #raise NotImplementedError("Implementar esta función")
 
 if __name__ == "__main__":
     import doctest
-
     doctest.testmod()
 
-    transform_data()
+transform_data()

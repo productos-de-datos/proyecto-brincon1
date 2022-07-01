@@ -19,8 +19,6 @@ def compute_daily_prices():
 
     * precio: precio promedio diario de la electricidad en la bolsa nacional
 
-
-
     """
     import pandas as pd
 

@@ -41,5 +41,4 @@ if __name__ == "__main__":
 
     doctest.testmod()
 
-
 compute_monthly_prices()

@@ -1,4 +1,3 @@
-# coding=utf-8
 
 """
 Módulo de limpieza de datos.
@@ -21,17 +20,6 @@ requeridas y se guarda el archivo ordenado.
     * precio: precio de la electricidad en la bolsa nacional
 
     Este archivo contiene toda la información del 1997 a 2021.
-    
-Test_
->>> os.path.isfile("data_lake/cleansed/precios-horarios.csv") 
-True
->>> pd.read_csv('data_lake/cleansed/precios-horarios.csv').head()
-        fecha  hora    precio
-0  1995-07-20     0  1.409435
-1  1995-07-20     1  1.073000
-2  1995-07-20     2  1.073000
-3  1995-07-20     3  1.073000
-4  1995-07-20     4  1.073000
 
 """
 
@@ -66,15 +54,10 @@ def clean_data():
 
     #raise NotImplementedError("Implementar esta función")
 
-def test_04():
-    assert pd.clean_data().columns.tolist() == [
-        "fecha", "hora", "precio"]
-
 
 if __name__ == "__main__":
 
     import doctest
-
     doctest.testmod()
 
     clean_data()

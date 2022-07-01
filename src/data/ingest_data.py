@@ -1,4 +1,4 @@
-# coding=utf-8
+
 """
 Módulo de ingestión de datos.
 -------------------------------------------------------------------------------
@@ -31,14 +31,7 @@ def ingest_data():
             file = req.get(url, allow_redirects=True)
             open('data_lake/landing/{}.xlsx'.format(num), 'wb').write(file.content)
 
-    raise NotImplementedError("Implementar esta función")
-
-def test_02():
-    import os
-    assert os.path.isfile("data_lake/landing/1995.xlsx") is True
-    assert os.path.isfile("data_lake/landing/2016.xls") is True
-    assert os.path.isfile("data_lake/landing/2021.xlsx") is True
-
+    #raise NotImplementedError("Implementar esta función")
 
 
 if __name__ == "__main__":
@@ -46,4 +39,4 @@ if __name__ == "__main__":
     import doctest
     doctest.testmod()
 
-    ingest_data()
+ingest_data()

@@ -66,7 +66,7 @@ if __name__ == "__main__":
 
     class PrecioPromedioMensual(Task):
         # def requires(self):
-        #     return TablaUnicaPrecios()
+        #      return TablaUnicaPrecios()
 
         def output(self):
             return luigi.LocalTarget('data_lake/business/1995.txt')
@@ -79,7 +79,6 @@ if __name__ == "__main__":
 
 if __name__ == "__main__":
     import doctest
-
     doctest.testmod()
     
 luigi.run(["PrecioPromedioDiario", "--local-scheduler"])
