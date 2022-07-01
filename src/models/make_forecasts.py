@@ -37,7 +37,7 @@ def make_forecasts():
 
     def load_model():
 
-        with open("src/models/precios-diarios.pickle", "rb") as file:
+        with open("src/models/precios-diarios.pkl", "rb") as file:
             model = pkl.load(file)
 
         return model
