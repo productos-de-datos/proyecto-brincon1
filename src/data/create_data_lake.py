@@ -38,7 +38,6 @@ def create_data_lake():
     """
 
     from os import mkdir
-    import os
  
     mkdir("./data_lake")
     mkdir("./data_lake/landing")
@@ -50,7 +49,7 @@ def create_data_lake():
     mkdir("./data_lake/business/features")
     mkdir("./data_lake/business/forecasts")
 
-    raise NotImplementedError("Implementar esta función")
+    #raise NotImplementedError("Implementar esta función")
     
 def test_01():
     import os
