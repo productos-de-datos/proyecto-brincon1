@@ -1,10 +1,14 @@
-
+# coding=utf-8
 """
 Módulo de creación de carpetas.
 -------------------------------------------------------------------------------
 
 En este modulo se crean las carpetas necesarias para guardar el proyecto y que 
 siguen la estructura que se indica en las instrucciones.
+
+test_
+>>> os.path.isdir("data_lake/business/reports/figures") 
+True
 
 """
 
@@ -48,10 +52,16 @@ def create_data_lake():
 
     #raise NotImplementedError("Implementar esta función")
 
+def test_01():
+    import os
+    assert os.path.isdir("data_lake") is True
+    assert os.path.isdir("data_lake/business/reports") is True
+    assert os.path.isdir("data_lake/business/reports/figures") is True
+
 if __name__ == "__main__":
-    
+    create_data_lake()
     import doctest
     doctest.testmod()
 
-    create_data_lake()
+  
     
