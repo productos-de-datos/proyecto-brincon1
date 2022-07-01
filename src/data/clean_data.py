@@ -72,9 +72,9 @@ def test_04():
 
 
 if __name__ == "__main__":
-    clean_data()
+
     import doctest
 
     doctest.testmod()
 
-    
+    clean_data()

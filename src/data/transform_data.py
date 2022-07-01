@@ -11,7 +11,7 @@ contiene las contiene.
 Por último se guardan los archivos en formato csv.
 
 Test_
->>> os.path.isdir("data_lake/raw/1995.csv") 
+>>> os.path.isfile("data_lake/raw/1995.csv") 
 True
 
 """
