@@ -1,141 +1,81 @@
 """
-Documentación:
+Módulo de entrenamiento del modelo.
+-------------------------------------------------------------------------------
+En este módulo se selecciona la columna precios que es la que se desea pronósticar,
+se remueve la tendencia, el componente ciclico, se escalan los datos, se construye
+la matriz de regresores y luego se entrena el modelo y se guarda.
+Todo se siguió de:
+https://jdvelasq.github.io/courses/notebooks/sklearn_supervised_10_neural_networks/1-03_pronostico_series_de_tiempo.html
 
 """
-def train_daily_model():
-    """Entrena el modelo de pronóstico de precios diarios.
+"""Entrena el modelo de pronóstico de precios diarios.
 
     Con las features entrene el modelo de pronóstico de precios diarios y
     salvelo en models/precios-diarios.pkl
 
+"""
 
-    """
-    import pandas as pd
-    from sklearn.model_selection import train_test_split
-    from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
-    from sklearn.model_selection import GridSearchCV
-    from sklearn.preprocessing import StandardScaler
-    from sklearn.ensemble import RandomForestRegressor
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.neural_network import MLPRegressor
+import pickle
 
-    import pickle
-    import os
-
-    def load_data():
-
-        df = pd.read_csv('data_lake/business/features/precios-diarios.csv')
-        df['fecha'] = pd.to_datetime(df['fecha'], format="%Y/%m/%d")
-        df = df.set_index('fecha')
-        df = df.asfreq("D")
-        df = df.sort_index()
-        y = df["avg_daily_price"]
-        x = df.copy()
-        x.drop(["avg_daily_price"], axis=1, inplace=True)
-        return x, y
-
-    ## forma 2
-        # df = pd.read_csv('data_lake/business/features/precios-diarios.csv')
-        # df['fecha'] = pd.to_datetime(df['fecha'], format="%Y/%m/%d")
-        # df = df.set_index('fecha').asfreq("D")
-        # y = df["avg_daily_price"]
-        # x = df.copy()
-        # x.drop(["avg_daily_price"], axis=1, inplace=True)
+def load_data():
+    df = pd.read_csv('data_lake/business/features/precios-diarios.csv')
+    data = df["precio"]
+    return data
     
-    def make_train_test_split(x, y):
+            # Se remueve la tendencia
+def tendencia_removida():
+    data = load_data()
+    data_d1 = [data[t] - data[t - 1] for t in range(1, len(data))]
+    return data_d1
 
-        (x_train, x_test, y_train, y_test) = train_test_split(
-            x,
-            y,
-            test_size=0.25,
-            random_state=123456,
-        )
-        return x_train, x_test, y_train, y_test
+def comp_ciclica_removida():
+    data_d1 = tendencia_removida()
+    data_d1d12 = [data_d1[t] - data_d1[t - 12] for t in range(12, len(data_d1))]
+    return data_d1d12
 
-    # def train_model():
-
-    #     x, y = load_data()
-    #     x_train, x_test, y_train, y_test = make_train_test_split(x, y)
-
-    #     # Crea el preprocesador
-    #     scaler = StandardScaler()
-
-    #     # Entrena el preprocesador. Note que se calcula
-    #     # unicamente para el conjunto de entrenamiento
-    #     scaler.fit(x_train)
-
-    #     # Escala los conjuntos de entrenamiento y prueba
-    #     x_train = scaler.transform(x_train)
-    #     x_test  = scaler.transform(x_test)
-
-
-    #     forecaster = ForecasterAutoreg(
-    #                 regressor = RandomForestRegressor(random_state=123),
-    #                 lags = 6
-    #             )
-
-    #     #forecaster.fit(y=datos_train['y'])
-    #     return forecaster
-
-    def save_model(model):
-
-        import pickle
-
-        with open("src/models/precios-diarios.pickle", "wb") as file:
-            pickle.dump(model, file)
-
-        
-    # def load_model():
-
-    #     import pickle
-
-    #     with open("src/models/precios-diarios.pickle", "rb") as file:
-    #         model = pickle.load(file)
-
-    #     return model
-
-    def train_model():
-
-        x, y = load_data()
-        x_train, x_test, y_train, y_test = make_train_test_split(x, y)
-
-        # Crea el preprocesador
-        scaler = StandardScaler()
-
-        # Entrena el preprocesador. Note que se calcula
-        # unicamente para el conjunto de entrenamiento
-        scaler.fit(x_train)
-
-        # Escala los conjuntos de entrenamiento y prueba
-        x_train = scaler.transform(x_train)
-        x_test  = scaler.transform(x_test)
-
-        model = ForecasterAutoreg(
-                regressor = RandomForestRegressor(random_state=123),
-                lags = 6
-             )
-
-        model.fit(y_train)
-
-        save_model(model)
+def valores_escalados():
+    data_d1d12 = comp_ciclica_removida()
+    scaler = MinMaxScaler()
+    data_d1d12_scaled = scaler.fit_transform(np.array(data_d1d12).reshape(-1, 1))
+    data_d1d12_scaled = [u[0] for u in data_d1d12_scaled] # el largo de los datos escalados es 9404
+    return data_d1d12_scaled
     
-    train_model()
+def matriz_regresores():
+    data_d1d12_scaled = valores_escalados()
+    P = 13
+    X = []
+    for t in range(P - 1, len(data_d1d12_scaled) - 1):
+        X.append([data_d1d12_scaled[t - n] for n in range(P)])
+    d = data_d1d12_scaled[P:] # el largo de X y d es 9391
+    return X
 
-    #     estimator = ElasticNet(alpha=alpha, l1_ratio=l1_ratio, random_state=12345)
-    #     estimator.fit(x_train, y_train)
-    #     mse, mae, r2 = eval_metrics(y_test, y_pred=estimator.predict(x_test))
-    #     if verbose > 0:
-    #         report(estimator, mse, mae, r2)
+def save_model(model):
 
-    #     best_estimator = load_best_estimator()
-    #     if best_estimator is None or estimator.score(x_test, y_test) > best_estimator.score(
-    #         x_test, y_test
-    #     ):
-    #         best_estimator = estimator
+    with open("src/models/precios-diarios.pickle", "wb") as file:
+        pickle.dump(model, file, pickle.HIGHEST_PROTOCOL)
 
-    #     save_best_estimator(best_estimator)
+def train_daily_model():
+    X = matriz_regresores()
+    data_d1d12_scaled = valores_escalados()
+    H = 4  # Se escoge arbitrariamente
+    np.random.seed(123456)
+    mlp = MLPRegressor(
+        hidden_layer_sizes=(H,),
+        activation="logistic",
+        learning_rate="adaptive",
+        momentum=0.0,
+        learning_rate_init=0.002,
+        max_iter=100000,
+    )
+    model = mlp.fit(X[0:8441], data_d1d12_scaled[0:8441]) # 9391 - 950 = 8441. 9391 es el largo de X 
+                                                          #  y 950 es aproximadamente el 10% de los datos
+    save_model(model)
+train_daily_model()
     
-    # train_estimator(0.1, 0.05)
-
-
     #raise NotImplementedError("Implementar esta función")
 
 
@@ -144,4 +84,4 @@ if __name__ == "__main__":
 
     doctest.testmod()
 
-train_daily_model()
+#train_daily_model()

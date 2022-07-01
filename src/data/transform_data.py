@@ -1,13 +1,18 @@
+# coding=utf-8
 """
-Documentación
+Módulo de transformación de datos.
+-------------------------------------------------------------------------------
 
-Se hacen dos condicionales, el primero para leer los archivos terminados en xls y el segundo para leer los archivos xlsx.
-Se eliminan las filas que no tengan al menos 10 valores distintos de N/A. Esto se hace porque hay archivos que tienen filas
-vacias en el encabezado y al final de la página.
-Se inicia desde la fila 1 para no considerar el nombre de las columnas y que por defecto se asigne una lista 
-como nombre y poder asignar el mismo nombre a todas las columnas.
-También se seleccionan solo las columnas de interes, de la 0 a la 24 y se asigna la columna 0 con formato YYYY-MM-DD.
-y despues hacer el reemplazo de los nombres más fácil.
+En este modulo se abren los archivos xls y xlsx, se eliminan filas vacías, no
+se considera el encabezado de las columnas y  se seleccionan solo las 25 columnas 
+con las que se va a trabajar.
+Además, se asigna el nombre a las columnas y se pasa a formato fecha el campo que
+contiene las contiene. 
+Por último se guardan los archivos en formato csv.
+
+Test_
+>>> os.path.isdir("data_lake/raw/1995.csv") 
+True
 
 """
 
@@ -20,7 +25,6 @@ def transform_data():
     H23.
 
     """
-
     import pandas as pd
 
     for num in range(1995, 2022):
@@ -47,7 +51,16 @@ def transform_data():
             df.to_csv('data_lake/raw/{}.csv'.format(num), encoding='utf-8', index=False, header=True)
 
 
-    #raise NotImplementedError("Implementar esta función")
+    raise NotImplementedError("Implementar esta función")
+
+def test_03():
+    import os
+    assert os.path.isfile("data_lake/raw/1995.csv") is True
+
+def test_04():
+    assert transform_data().columns.tolist() == [
+        "fecha", "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", 
+            "16", "17", "18", "19", "20", "21", "22", "23"]
 
 
 if __name__ == "__main__":
@@ -55,4 +68,4 @@ if __name__ == "__main__":
 
     doctest.testmod()
 
-transform_data()
+    transform_data()

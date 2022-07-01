@@ -1,7 +1,10 @@
 """
-Documentación:
+Módulo de creación del gráfico de precios diarios.
+-------------------------------------------------------------------------------
 
-Esta función lo que hace es crear un gráfico de lineas a partir del archivo de precios promedios diarios.
+Esta función lo que hace es crear un gráfico de lineas a partir del archivo de 
+precios promedios diarios.
+
 """
 
 def make_daily_prices_plot():
@@ -18,7 +21,10 @@ def make_daily_prices_plot():
 
     df = pd.read_csv('data_lake/business/precios-diarios.csv', index_col=0, parse_dates=True)
  
-    df.plot(figsize=(12, 6))
+    plt.figure(figsize=(14, 5))
+    plt.plot(df)
+    plt.xlabel('Fecha')
+    plt.ylabel('Precio promedio diario')
     plt.savefig('data_lake/business/reports/figures/daily_prices.png')
 
 

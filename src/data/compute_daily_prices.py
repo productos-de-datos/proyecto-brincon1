@@ -1,8 +1,11 @@
 """
-Documentación
+Módulo de computación de precios diarios.
+-------------------------------------------------------------------------------
 
-Se agrega una nueva columna llamada promedio diario, la cual suma el precio de cada hora y lo divide en 24.
-Después se selecciona solo la primera y la última columna y se guardan en un nuevo archivo.
+En este módulo se asigna como indice la columna fecha en formato fecha y después
+se calcula el precio promedio por día. Después se restaura el indice y se selecciona
+la fecha y el precio promedio diario y se guarda.
+
 """
 
 def compute_daily_prices():

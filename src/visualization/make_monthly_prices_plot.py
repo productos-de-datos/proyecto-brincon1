@@ -1,7 +1,9 @@
 """
-Documentación:
+Módulo de creación del gráfico de precios mensuales.
+-------------------------------------------------------------------------------
 
-Esta función lo que hace es crear un gráfico de lineas a partir del archivo de precios promedios mensuales.
+Esta función lo que hace es crear un gráfico de lineas a partir del archivo de 
+precios promedios mensuales.
 """
 
 def make_monthly_prices_plot():
@@ -17,8 +19,10 @@ def make_monthly_prices_plot():
     import matplotlib.pyplot as plt
 
     df = pd.read_csv('data_lake/business/precios-mensuales.csv', index_col=0, parse_dates=True)
- 
-    df.plot(figsize=(12, 6))
+    plt.figure(figsize=(14, 5))
+    plt.plot(df)
+    plt.xlabel('Fecha')
+    plt.ylabel('Precio promedio mensual')
     plt.savefig('data_lake/business/reports/figures/monthly_prices.png')
 
 

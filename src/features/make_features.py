@@ -1,5 +1,9 @@
 """
-Documentación:
+Módulo de preparación de datos para pronóstico.
+-------------------------------------------------------------------------------
+
+Debido a que tenemos una serie de tiempo con una única variable dependiente no 
+es necesario hacer cálculos y solo se guarda el archivo en la nueva ruta.
 
 """
 

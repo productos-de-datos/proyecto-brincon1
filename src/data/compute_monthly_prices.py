@@ -1,11 +1,10 @@
 """
-Documentación:
+Módulo de computación de precios mensuales.
+-------------------------------------------------------------------------------
 
-Se establece la fecha como indice al momento de leer el archivo CSV.
-Se calcula el promedio diario y con este se calcula el promedio mensual.
-Se eliminan los indices y con estos como columnas se seleccionan, se unen
-y se crea una nueva columna estableciendo el día 10 para todos los meses.
-Por ùltimo se selecciona la columna que contiene la fecha unida y el precio promedio mensual.
+En este módulo se asigna como indice la columna fecha en formato fecha y después
+se calcula el precio promedio por mes. Después se restaura el indice y se selecciona
+la fecha y el precio promedio mensual y se guarda.
 
 """
 
