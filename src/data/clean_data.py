@@ -51,9 +51,7 @@ def clean_data():
 
     df.to_csv('data_lake/cleansed/precios-horarios.csv', encoding='utf-8', index=False)
 
-
     #raise NotImplementedError("Implementar esta función")
-
 
 if __name__ == "__main__":
 

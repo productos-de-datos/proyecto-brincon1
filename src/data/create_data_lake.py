@@ -34,6 +34,7 @@ def create_data_lake():
     """
 
     from os import mkdir
+    import os
  
     mkdir("./data_lake")
     mkdir("./data_lake/landing")
@@ -52,5 +53,5 @@ if __name__ == "__main__":
     import doctest
     doctest.testmod()
 
-create_data_lake()
+    create_data_lake()
     

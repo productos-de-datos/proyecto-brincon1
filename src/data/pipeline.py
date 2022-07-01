@@ -47,7 +47,7 @@ if __name__ == "__main__":
             return TransformFiles()
 
         def output(self):
-            return luigi.LocalTarget('data_lake/cleansed/1995.txt')
+            return luigi.LocalTarget('data_lake/cleansed/precios.txt')
 
         def run(self):
             with self.output().open("w") as outfile:
