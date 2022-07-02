@@ -35,12 +35,12 @@ def create_data_lake():
     mkdir("data_lake/business/reports/figures")
     mkdir("data_lake/business/features")
     mkdir("data_lake/business/forecasts")
-    raise NotImplementedError("Implementar esta función")
+    #raise NotImplementedError("Implementar esta función")
 def test_01():
     assert os.path.isdir("data_lake") is True
     assert os.path.isdir("data_lake/business/reports") is True
     assert os.path.isdir("data_lake/business/reports/figures") is True
 if __name__ == "__main__":
     import doctest
-    create_data_lake()
     doctest.testmod()
+    create_data_lake()
