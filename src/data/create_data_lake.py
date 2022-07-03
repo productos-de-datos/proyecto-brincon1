@@ -25,7 +25,9 @@ True
 """
 import os
 from os import mkdir
+
 def create_data_lake():
+    """Crea el data lake con sus capas"""
     mkdir("data_lake")
     mkdir("data_lake/landing")
     mkdir("data_lake/raw")
@@ -36,10 +38,13 @@ def create_data_lake():
     mkdir("data_lake/business/features")
     mkdir("data_lake/business/forecasts")
     #raise NotImplementedError("Implementar esta función")
+
 def test_01():
+    """Evalua la creación de algunas capas del data lake"""
     assert os.path.isdir("data_lake") is True
     assert os.path.isdir("data_lake/business/reports") is True
     assert os.path.isdir("data_lake/business/reports/figures") is True
+
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
